@@ -1,10 +1,331 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的个人主页</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="吴新雨 · 软件架构师的个人主页，关注算法、系统设计与工程实践。">
+<meta name="author" content="吴新雨 Xinyu Wu">
+<title>吴新雨 · 软件架构师 - Xinyu Wu</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f9fc;
+    --card: #ffffff;
+    --border: #e4e9f2;
+    --text: #1f2937;
+    --muted: #64748b;
+    --accent: #2563eb;
+    --accent-2: #0891b2;
+    --accent-glow: rgba(37, 99, 235, 0.14);
+    --gold: #b45309;
+    --mono: "SFMono-Regular", "JetBrains Mono", "Fira Code", Consolas, "Roboto Mono", monospace;
+    --sans: "Inter", "PingFang SC", "Microsoft YaHei", "Segoe UI", Roboto, system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background:
+      radial-gradient(1200px 600px at 80% -10%, rgba(37, 99, 235, 0.06), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(8, 145, 178, 0.05), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); text-decoration: none; transition: color .15s ease; }
+  a:hover { color: var(--accent-2); }
+
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--accent);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 20px -8px var(--accent-glow);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-family: var(--mono); font-weight: 600; font-size: 15px; letter-spacing: .3px; color: #ffffff; }
+  .logo .dot { color: #bfdbfe; }
+  .logo span { color: #dbeafe; }
+  .nav-links { display: flex; gap: 24px; list-style: none; }
+  .nav-links a { color: #dbeafe; font-size: 14px; }
+  .nav-links a:hover { color: #ffffff; }
+  .nav-links a.active { color: #ffffff; font-weight: 600; }
+
+  /* Hero */
+  .hero { padding: 72px 0 40px; display: flex; gap: 48px; align-items: center; }
+  .hero-text { flex: 1 1 auto; }
+  .hero .eyebrow {
+    font-family: var(--mono); color: var(--accent-2); font-size: 13px;
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .hero h1 { font-size: 42px; line-height: 1.15; font-weight: 700; letter-spacing: -.5px; }
+  .hero h1 .en { display: block; font-size: 22px; font-weight: 500; color: var(--muted); margin-top: 6px; }
+  .hero .role { margin-top: 14px; font-size: 18px; }
+  .hero .role b { color: var(--accent); font-weight: 600; }
+  .hero .tagline { margin-top: 12px; color: var(--muted); max-width: 560px; font-size: 15px; }
+  .hero-photo {
+    flex: 0 0 auto; width: 190px; height: 190px; border-radius: 18px;
+    overflow: hidden; border: 1px solid var(--border);
+    box-shadow: 0 0 0 1px rgba(0,0,0,.02), 0 18px 40px -18px var(--accent-glow);
+    background: linear-gradient(135deg, #eaf1ff, #f2f6fb);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-photo .placeholder { font-family: var(--mono); color: var(--muted); font-size: 13px; text-align: center; }
+
+  .contact-row { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .contact-row a, .contact-row span {
+    font-family: var(--mono); font-size: 13px; color: var(--muted);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .contact-row a:hover { color: var(--accent); }
+  .contact-row .sep { opacity: .4; }
+
+  /* Sections */
+  section { padding: 44px 0; border-top: 1px solid var(--border); }
+  h2 {
+    font-size: 22px; font-weight: 650; letter-spacing: -.3px; margin-bottom: 22px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  h2::before { content: "//"; font-family: var(--mono); color: var(--accent); font-weight: 500; }
+  h2 .num { font-family: var(--mono); color: var(--accent-2); font-size: 14px; font-weight: 400; margin-left: auto; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+  .tl-item { position: relative; padding-bottom: 28px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-item::before {
+    content: ""; position: absolute; left: -26px; top: 7px; width: 11px; height: 11px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
+  }
+  .tl-item .period { font-family: var(--mono); font-size: 12px; color: var(--accent-2); }
+  .tl-item h3 { font-size: 16px; font-weight: 600; margin: 3px 0 2px; }
+  .tl-item .org { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+  .tl-item ul { list-style: none; margin-top: 4px; }
+  .tl-item li { font-size: 13.5px; color: var(--muted); margin-bottom: 7px; padding-left: 18px; position: relative; max-width: 760px; }
+  .tl-item li::before { content: "▹"; position: absolute; left: 0; color: var(--accent); }
+  .tl-item li b, .tl-item li strong { color: var(--text); font-weight: 600; }
+
+  .award { color: var(--gold); font-weight: 600; }
+
+  /* Publications */
+  .pubs { display: flex; flex-direction: column; gap: 14px; }
+  .pub {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .pub:hover { transform: translateY(-2px); border-color: var(--accent); }
+  .pub .year { font-family: var(--mono); font-size: 12px; color: var(--accent-2); }
+  .pub h3 { font-size: 15px; font-weight: 600; margin: 3px 0 4px; }
+  .pub .venue { font-size: 13px; color: var(--muted); }
+
+  /* Awards grid */
+  .awards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .award-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .award-card .year { font-family: var(--mono); font-size: 12px; color: var(--accent-2); }
+  .award-card .title { font-size: 14px; font-weight: 600; }
+  .award-card .sub { font-size: 12.5px; color: var(--muted); }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .skill-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+  }
+  .skill-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+  .skill-card h3 .ico { color: var(--accent); font-family: var(--mono); margin-right: 8px; }
+  .skill-card p { font-size: 13.5px; color: var(--muted); }
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; }
+  .tag {
+    font-family: var(--mono); font-size: 11.5px; padding: 4px 10px; border-radius: 6px;
+    background: rgba(37, 99, 235, .08); color: #1d4ed8; border: 1px solid rgba(37, 99, 235, .20);
+  }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 32px 0 44px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    color: var(--muted); font-size: 13px;
+  }
+  footer .mono { font-family: var(--mono); font-size: 12px; }
+
+  @media (max-width: 760px) {
+    .hero { flex-direction: column-reverse; text-align: center; gap: 24px; padding-top: 48px; }
+    .hero .tagline { margin-left: auto; margin-right: auto; }
+    .contact-row { justify-content: center; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 34px; }
+    .tl-item li { padding-left: 16px; }
+  }
+</style>
 </head>
 <body>
-    <h1>你好，世界！</h1>
-    <p>这是我的第一个 GitHub Pages 页面。</p>
+
+<header>
+  <nav class="container nav">
+    <a class="logo" href="#top">Wu<span class="dot">.</span>Xinyu <span style="color:var(--muted)">/ 吴新雨</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">工作经历</a></li>
+      <li><a href="#pubs">论文</a></li>
+      <li><a href="#awards">竞赛荣誉</a></li>
+      <li><a href="#skills">技能</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div id="top"></div>
+
+<main class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-text">
+      <div class="eyebrow">Software Development Engineer</div>
+      <h1>吴新雨<span class="en">Xinyu Wu</span></h1>
+      <p class="role"> <b>软件架构师</b></p>
+      <p class="tagline">算法驱动的软件工程师，专注于高性能系统设计与工程实践。硕士毕业于电子科技大学计算机科学与技术专业（研究方向-计算理论）；获 ACM-ICPC 亚洲区域赛银牌、IEEE Xtreme 全球 Top 1%；曾任华为高级工程师，擅长将各类优化算法落地到产品竞争力中。<strong>喜欢经典算法+大模型的思维框架，构建AI时代核心竞争力</strong>。</p>
+      <div class="contact-row">
+        <a href="mailto:wu.xinyu@outlook.com">邮箱：wu.xinyu@outlook.com</a>
+        <span class="sep">·</span>
+        <span class="sep">·</span>
+        <a href="https://github.com/leiou7" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <span class="placeholder">头像<br>photo</span>
+    </div>
+  </div>
+
+  <!-- 工作经历 -->
+  <section id="work">
+    <h2>工作经历<span class="num">01</span></h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="period">2023.07 — 2026.07</span>
+        <h3>高级工程师B</h3>
+        <div class="org">华为技术有限公司</div>
+        <ul>
+          <li><strong>需求交付</strong>：担任 2 个重点大颗粒需求的 OWNER，拉通各领域完成软件详细设计、实现设计、代码开发、质量加固、转测串讲与维护；多个项目高质量按时交付，个人获公司质量之星，团队获版本最佳交付战队称号。</li>
+          <li><strong>代码贡献</strong>：个人代码连续两年白盒评价为优秀（前 10%），获2025 年度软件精英、卓越代码奖等荣誉；担任 committer，严格把控代码上库质量，定期开展团队业务培训与代码检视。</li>
+          <li><strong>算法贡献</strong>：作为团队算法专家，设计5+算法并落地到现网中使用，以高性能算法增强产品竞争力，获季度最佳好代码奖、金码奖等荣誉。</li>
+          <li><strong>AI 辅助</strong>：熟练使用 AI 工具编写测试用例高效拦截问题；利用 AI 辅助编码完成基础业务功能开发，提升工作效率。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 实习经历 -->
+  <section id="intern">
+    <h2>实习经历<span class="num">02</span></h2>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="period">2022.07 — 2022.08</span>
+        <h3>通用软件架构师</h3>
+        <div class="org">华为技术有限公司</div>
+        <ul>
+          <li>负责拓扑网络中网元升级时安装包传输的效率提升，设计网元编排算法，输出升级优先级顺序，提升包加载速度。</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <span class="period">2020.03 — 2020.08</span>
+        <h3>研究助理</h3>
+        <div class="org">深圳市人工智能与机器人研究院</div>
+        <ul>
+          <li>研究机器人仓库系统中多机器人的路径规划问题，实现在线寻路算法，处理路径冲突，为每个机器人规划无冲突路径，提升仓库运行效率。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 学术论文 -->
+  <section id="pubs">
+    <h2>学术论文<span class="num">03</span></h2>
+    <div class="pubs">
+      <div class="pub">
+        <span class="year">2024</span>
+        <h3>Efficient Backbone Network Construction in Wireless Artificial Intelligent Computing Systems</h3>
+        <div class="venue">Tsinghua Science and Technology, 30(5): 2300-2319, 2025</div>
+      </div>
+      <div class="pub">
+        <span class="year">2023</span>
+        <h3>A Partition-and-Merge Algorithm for Solving the Steiner Tree Problem in Large Graphs</h3>
+        <div class="venue">COCOON (2) 2024: 128-139</div>
+      </div>
+      <div class="pub">
+        <span class="year">2022</span>
+        <h3>A Fast Heuristic Algorithm for the Steiner Tree Problem with Uniform Edge Weights</h3>
+        <div class="venue">Pattern Recognition and Artificial Intelligence</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 竞赛荣誉 -->
+  <section id="awards">
+    <h2>竞赛与荣誉<span class="num">04</span></h2>
+    <div class="awards">
+      <div class="award-card">
+        <span class="year">2020</span>
+        <div class="title">IEEE Xtreme 极限编程全球大赛</div>
+        <div class="sub">Top 1%（32 / 3701）</div>
+      </div>
+      <div class="award-card">
+        <span class="year">2018</span>
+        <div class="title">中国高校计算机大赛 · 团体程序设计大赛</div>
+        <div class="sub">全国总决赛一等奖</div>
+      </div>
+      <div class="award-card">
+        <span class="year">2018~2019</span>
+        <div class="title">ACM-ICPC 国际大学生程序设计竞赛</div>
+        <div class="sub">亚洲区域赛银牌 × 3</div>
+      </div>
+      <div class="award-card">
+        <span class="year">2017~2018</span>
+        <div class="title">ACM 山东省大学生程序设计竞赛</div>
+        <div class="sub">金牌 × 2</div>
+      </div>
+      <div class="award-card">
+        <span class="year">—</span>
+        <div class="title">华为公司级荣誉</div>
+        <div class="sub">公司质量之星 · 2025 年度软件精英 · 卓越代码奖 · 金码奖 · 季度最佳好代码奖</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 技能 -->
+  <section id="skills">
+    <h2>编程技能<span class="num">05</span></h2>
+    <div class="skills">
+      <div class="skill-card">
+        <h3><span class="ico">&gt;</span> 编程语言</h3>
+        <div class="tags">
+          <span class="tag">C</span><span class="tag">C++</span><span class="tag">Python</span><span class="tag">Pascal</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ico">&gt;</span> 算法</h3>
+        <p>图算法（最短路、生成树等）；数据结构（栈、队列、线段树等）；常用算法设计思想：分治、贪心、递归、动态规划。擅长经典算法+大模型解决问题</p>
+      </div>
+      <div class="skill-card">
+        <h3><span class="ico">&gt;</span> 语言能力</h3>
+        <p>英语 CET-6（516 分）</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="container">
+  <span>© 2026 吴新雨 · Xinyu Wu</span>
+  <span class="mono">Let's connect!</span>
+</footer>
+
 </body>
 </html>
