@@ -124,12 +124,26 @@
   .pub .year { font-family: var(--mono); font-size: 12px; color: var(--accent-2); }
   .pub h3 { font-size: 15px; font-weight: 600; margin: 3px 0 4px; }
   .pub .venue { font-size: 13px; color: var(--muted); }
+  .pub .venue .presentation-award { color: #000; font-weight: 700; }
 
   /* Awards grid */
   .awards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
   .award-card {
+    position: relative; isolation: isolate; overflow: hidden;
     background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;
     display: flex; flex-direction: column; gap: 4px;
+  }
+  .award-card::before {
+    content: ""; position: absolute; z-index: -1; inset: 8px 14px 8px auto;
+    width: min(62%, 190px); background: right center / contain no-repeat;
+    opacity: .2; pointer-events: none;
+  }
+  .award-card--huawei::before { background-image: url("assets/awards/huawei.png"); }
+  .award-card--ieee::before { background-image: url("assets/awards/ieeextreme.png"); }
+  .award-card--icpc::before { width: min(48%, 140px); background-image: url("assets/awards/icpc.png"); }
+  .award-card--gplt::before {
+    width: min(65%, 200px); background-image: url("assets/awards/gplt.png");
+    opacity: .12; filter: brightness(1.3);
   }
   .award-card .year { font-family: var(--mono); font-size: 12px; color: var(--accent-2); }
   .award-card .title { font-size: 14px; font-weight: 600; }
@@ -190,7 +204,7 @@
       <div class="eyebrow">Software Architect · Senior Developer </div>
       <h1>吴新雨<span class="en">Xinyu Wu</span></h1>
       <p class="tagline">算法驱动的软件架构师，专注于高性能系统设计与工程实践。</p>
-      <p class="tagline">硕士毕业于电子科技大学计算机科学与技术专业（计算理论）；获 ACM-ICPC 亚洲区域赛银牌、IEEE Xtreme 全球 Top 1%；曾任华为高级工程师，现任齐鲁创新院软件架构师，擅长将各类优化算法落地到产品竞争力中。</p>
+      <p class="tagline">硕士毕业于电子科技大学计算机科学与技术专业（计算理论）；获 ACM-ICPC 亚洲区域赛银牌、IEEE Xtreme 极限编程全球 Top 1%；曾任华为高级工程师，现任齐鲁创新院软件架构师，擅长将各类优化算法落地到产品竞争力中。</p>
       <p class="tagline">我喜欢经典算法+大模型的思维框架，构筑AI时代核心竞争力。</p>
       <div class="contact-row">
         <a href="mailto:wu.xinyu@outlook.com">邮箱：wu.xinyu@outlook.com</a>
@@ -276,7 +290,7 @@
       <div class="pub">
         <span class="year">2022</span>
         <h3>A Fast Heuristic Algorithm for the Steiner Tree Problem with Uniform Edge Weights</h3>
-        <div class="venue">Pattern Recognition and Artificial Intelligence(PRAI), 2022: 1281-1286</div>
+        <div class="venue">Pattern Recognition and Artificial Intelligence(PRAI), 2022: 1281-1286; <strong class="presentation-award">Best Presentation Award</strong> </div>
       </div>
     </div>
   </section>
@@ -285,27 +299,27 @@
   <section id="awards">
     <h2>荣誉</h2>
     <div class="awards">
-      <div class="award-card">
+      <div class="award-card award-card--huawei">
         <span class="year">2023~2026</span>
         <div class="title">华为公司级荣誉</div>
         <div class="sub">公司质量之星 · 2025 年度软件精英 · 卓越代码奖 · 金码奖 · 季度最佳好代码奖</div>
       </div>
-      <div class="award-card">
+      <div class="award-card award-card--ieee">
         <span class="year">2020</span>
         <div class="title">IEEE Xtreme 极限编程全球大赛</div>
         <div class="sub">Top 1%（32 / 3701）</div>
       </div>
-      <div class="award-card">
+      <div class="award-card award-card--icpc">
         <span class="year">2018~2019</span>
         <div class="title">ACM-ICPC 国际大学生程序设计竞赛</div>
         <div class="sub">亚洲区域赛银牌 × 3</div>
       </div>
-      <div class="award-card">
+      <div class="award-card award-card--gplt">
         <span class="year">2018</span>
         <div class="title">中国高校计算机大赛 · 团体程序设计大赛</div>
         <div class="sub">全国总决赛一等奖</div>
       </div>
-      <div class="award-card">
+      <div class="award-card award-card--icpc">
         <span class="year">2017~2018</span>
         <div class="title">ACM 山东省大学生程序设计竞赛</div>
         <div class="sub">金牌 × 2</div>
